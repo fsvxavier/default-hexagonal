@@ -1,6 +1,6 @@
-module github.com/dock-tech/default-hexagonal
+module github.com/fsvxavier/default-hexagonal
 
-go 1.20
+go 1.21.3
 
 require (
 	github.com/cockroachdb/apd/v3 v3.2.1

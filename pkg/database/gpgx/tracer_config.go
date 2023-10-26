@@ -6,10 +6,9 @@ import (
 	"os"
 	"sync"
 
-	jsoniter "github.com/json-iterator/go"
-
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
+	jsoniter "github.com/json-iterator/go"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/ext"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"

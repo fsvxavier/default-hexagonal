@@ -37,14 +37,14 @@ type Http struct {
 }
 
 type Datadog struct {
-	Service       string `env:"DD_SERVICE"          envDefault:"munin-exchange-rate-api"                  json:"dd_service,omitempty"`
-	ServiceDb     string `env:"DD_SERVICE_DB"       envDefault:"munin-exchange-rate-api.db"                  json:"dd_service_db,omitempty"`
-	Env           string `env:"DD_ENV"              envDefault:"hml"                  json:"dd_env,omitempty"`
-	Version       string `env:"DD_VERSION"          envDefault:"latest"                json:"dd_version,omitempty"`
+	Service       string `env:"DD_SERVICE"          envDefault:"munin-exchange-rate-api"    json:"dd_service,omitempty"`
+	ServiceDb     string `env:"DD_SERVICE_DB"       envDefault:"munin-exchange-rate-api.db" json:"dd_service_db,omitempty"`
+	Env           string `env:"DD_ENV"              envDefault:"hml"                        json:"dd_env,omitempty"`
+	Version       string `env:"DD_VERSION"          envDefault:"latest"                     json:"dd_version,omitempty"`
 	AgentHost     string `env:"DD_AGENT_HOST"       json:"dd_agent_host,omitempty"`
 	AgentPort     string `env:"DD_TRACE_AGENT_PORT" json:"dd_agent_port,omitempty"`
-	Enabled       bool   `env:"DD_ENABLED"     envDefault:"true"                  json:"dd_enabled,omitempty"`
-	Profile       bool   `env:"DD_PROFILE"     envDefault:"false"                 json:"dd_profile,omitempty"`
+	Enabled       bool   `env:"DD_ENABLED"          envDefault:"true"                       json:"dd_enabled,omitempty"`
+	Profile       bool   `env:"DD_PROFILE"          envDefault:"false"                      json:"dd_profile,omitempty"`
 	ApmEnable     bool   `env:"DD_APM_ENABLED"      json:"dd_apm_enable,omitempty"`
 	LogsInjection bool   `env:"DD_LOGS_INJECTION"   json:"dd_logs_injection,omitempty"`
 	TraceEnable   bool   `env:"DD_TRACE_ENABLED"    json:"dd_trace_enable,omitempty"`
@@ -141,7 +141,6 @@ func cfgLog() *Log {
 }
 
 func cfgDatabase() *Database {
-
 	cfgDatabase := Database{
 		Driver:      os.Getenv("DB_DIVER"),
 		Type:        os.Getenv("DB_TYPE"),

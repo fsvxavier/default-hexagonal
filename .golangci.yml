@@ -47,7 +47,7 @@ severity:
 
 linters-settings:
   gci:
-    local-prefixes: github.com/dock-tech/default-hexagonal
+    local-prefixes: github.com/fsvxavier/default-hexagonal
   dupl:
     threshold: 100
   errorlint:

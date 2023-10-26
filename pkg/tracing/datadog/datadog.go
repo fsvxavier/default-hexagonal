@@ -24,7 +24,7 @@ var (
 type DatadogAgent struct{}
 
 func init() {
-	ddAgentHost = os.Getenv("DD_AGENT_HOST")
+	ddAgentHost = os.Getenv("DD_ENABLED")
 	if ddAgentHost == "" {
 		ddAgentHost = "127.0.0.1"
 		isMock = true
@@ -36,7 +36,7 @@ func Enabled() bool {
 }
 
 // StartTracing starts datadog tracing engine
-// It depends on DD_AGENT_HOST environment variable to start as read-prod env.
+// It depends on DD_ENABLED environment variable to start as read-prod env.
 func StartTracing(opts ...tracer.StartOption) {
 	defer func() {
 		started = true
