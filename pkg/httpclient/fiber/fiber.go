@@ -17,10 +17,10 @@ var (
 )
 
 type Request struct {
+	structUnmarshal any
 	headers         map[string]string
 	client          *fiber.Client
 	baseURL         string
-	structUnmarshal any
 }
 
 type Response struct {

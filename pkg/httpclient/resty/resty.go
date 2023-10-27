@@ -18,8 +18,8 @@ type Requester struct {
 	restyReq   *resty.Request
 	restyRes   *resty.Response
 	errHandler ErrorHandler
-	baseURL    string
 	headers    map[string]string
+	baseURL    string
 }
 
 type Response struct {

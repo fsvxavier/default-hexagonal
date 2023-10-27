@@ -306,50 +306,19 @@ func New() *http.Client {
 //
 // Since v2.0.0.
 type TraceInfo struct {
-	// DNSLookup is a duration that transport took to perform
-	// DNS lookup.
-	DNSLookup time.Duration
-
-	// ConnTime is a duration that took to obtain a successful connection.
-	ConnTime time.Duration
-
-	// TCPConnTime is a duration that took to obtain the TCP connection.
-	TCPConnTime time.Duration
-
-	// TLSHandshake is a duration that TLS handshake took place.
-	TLSHandshake time.Duration
-
-	// ServerTime is a duration that server took to respond first byte.
-	ServerTime time.Duration
-
-	// ResponseTime is a duration since first response byte from server to
-	// request completion.
-	ResponseTime time.Duration
-
-	// TotalTime is a duration that total request took end-to-end.
-	TotalTime time.Duration
-
-	// IsConnReused is whether this connection has been previously
-	// used for another HTTP request.
-	IsConnReused bool
-
-	// IsConnWasIdle is whether this connection was obtained from an
-	// idle pool.
-	IsConnWasIdle bool
-
-	// ConnIdleTime is a duration how long the connection was previously
-	// idle, if IsConnWasIdle is true.
-	ConnIdleTime time.Duration
-
-	// RequestAttempt is to represent the request attempt made during a Resty
-	// request execution flow, including retry count.
+	RemoteAddr     net.Addr
+	LocalAddr      net.Addr
+	TotalTime      time.Duration
+	TLSHandshake   time.Duration
+	ServerTime     time.Duration
+	ResponseTime   time.Duration
+	DNSLookup      time.Duration
+	ConnIdleTime   time.Duration
 	RequestAttempt int
-
-	// RemoteAddr returns the remote network address.
-	RemoteAddr net.Addr
-
-	// LocalAddr returns the local network address.
-	LocalAddr net.Addr
+	TCPConnTime    time.Duration
+	ConnTime       time.Duration
+	IsConnReused   bool
+	IsConnWasIdle  bool
 }
 
 func (r *Requester) TraceInfo() TraceInfo {

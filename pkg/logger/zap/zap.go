@@ -15,6 +15,8 @@ import (
 
 const ENV_DEV = "dev"
 
+type Field = zap.Field
+
 type Logger struct {
 	Config zap.Config
 	Out    io.Writer
@@ -25,6 +27,8 @@ type Logger struct {
 	EncoderConfig zapcore.EncoderConfig
 	TraceEnabled  bool
 }
+
+var Reflect = zap.Reflect
 
 func NewLogger() *Logger {
 	encoderCfg := zap.NewProductionEncoderConfig()
@@ -322,6 +326,49 @@ func Panicf(ctx context.Context, format string, args ...interface{}) {
 	instance := NewLogger()
 	instance.setFields(ctx)
 	instance.Zlg.Sugar().Panicf(format, args...)
+}
+
+/*-------------------------------------------------------------------*/
+// Debugln logs a message at level Debug on the standard logger.
+func Debugln(args ...interface{}) {
+	instance := NewLogger()
+	instance.Sugar().Debugln(args...)
+}
+
+// Infoln logs a message at level Info on the standard logger.
+func Infoln(args ...interface{}) {
+	instance := NewLogger()
+	instance.Sugar().Infoln(args...)
+}
+
+// Warnln logs a message at level Warn on the standard logger.
+func Warnln(args ...interface{}) {
+	instance := NewLogger()
+	instance.Sugar().Warnln(args...)
+}
+
+// Warningln logs a message at level Warn on the standard logger.
+func Warningln(args ...interface{}) {
+	instance := NewLogger()
+	instance.Sugar().Warnln(args...)
+}
+
+// Errorln logs a message at level Error on the standard logger.
+func Errorln(args ...interface{}) {
+	instance := NewLogger()
+	instance.Sugar().Errorln(args...)
+}
+
+// Fatalln logs a message at level Fatal on the standard logger.
+func Fatalln(args ...interface{}) {
+	instance := NewLogger()
+	instance.Sugar().Fatalln(args...)
+}
+
+// Panicln logs a message at level Panic on the standard logger.
+func Panicln(args ...interface{}) {
+	instance := NewLogger()
+	instance.Sugar().Panicln(args...)
 }
 
 func (lgr *Logger) SetOutput(w io.Writer) *Logger {

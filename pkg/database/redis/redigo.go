@@ -11,6 +11,7 @@ import (
 )
 
 type RedigoPoolOptions struct {
+	Context          context.Context
 	TlsConfig        *tls.Config
 	Password         string
 	TraceServiceName string
