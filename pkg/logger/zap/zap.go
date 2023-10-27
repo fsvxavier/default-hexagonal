@@ -332,43 +332,43 @@ func Panicf(ctx context.Context, format string, args ...interface{}) {
 // Debugln logs a message at level Debug on the standard logger.
 func Debugln(args ...interface{}) {
 	instance := NewLogger()
-	instance.Sugar().Debugln(args...)
+	instance.Zlg.Sugar().Debugln(args...)
 }
 
 // Infoln logs a message at level Info on the standard logger.
 func Infoln(args ...interface{}) {
 	instance := NewLogger()
-	instance.Sugar().Infoln(args...)
+	instance.Zlg.Sugar().Infoln(args...)
 }
 
 // Warnln logs a message at level Warn on the standard logger.
 func Warnln(args ...interface{}) {
 	instance := NewLogger()
-	instance.Sugar().Warnln(args...)
+	instance.Zlg.Sugar().Warnln(args...)
 }
 
 // Warningln logs a message at level Warn on the standard logger.
 func Warningln(args ...interface{}) {
 	instance := NewLogger()
-	instance.Sugar().Warnln(args...)
+	instance.Zlg.Sugar().Warnln(args...)
 }
 
 // Errorln logs a message at level Error on the standard logger.
 func Errorln(args ...interface{}) {
 	instance := NewLogger()
-	instance.Sugar().Errorln(args...)
+	instance.Zlg.Sugar().Errorln(args...)
 }
 
 // Fatalln logs a message at level Fatal on the standard logger.
 func Fatalln(args ...interface{}) {
 	instance := NewLogger()
-	instance.Sugar().Fatalln(args...)
+	instance.Zlg.Sugar().Fatalln(args...)
 }
 
 // Panicln logs a message at level Panic on the standard logger.
 func Panicln(args ...interface{}) {
 	instance := NewLogger()
-	instance.Sugar().Panicln(args...)
+	instance.Zlg.Sugar().Panicln(args...)
 }
 
 func (lgr *Logger) SetOutput(w io.Writer) *Logger {

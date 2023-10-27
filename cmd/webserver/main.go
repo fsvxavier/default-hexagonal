@@ -8,7 +8,7 @@ import (
 	"github.com/fsvxavier/default-hexagonal/pkg/httpserver/fiber"
 )
 
-const app_name = "medjat-ledger-api"
+const app_name = "template-api"
 
 var app_version = os.Getenv("DD_VERSION")
 
