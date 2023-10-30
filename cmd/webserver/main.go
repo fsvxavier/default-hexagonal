@@ -5,7 +5,7 @@ import (
 
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 
-	"github.com/fsvxavier/default-hexagonal/pkg/httpserver/fiber"
+	"github.com/fsvxavier/default-hexagonal/pkg/httpserver/nethttp"
 )
 
 const app_name = "template-api"
@@ -24,7 +24,15 @@ func Run() {
 		tracer.WithRuntimeMetrics(),
 	}...)
 
-	frameworks := fiber.FiberEngine{}
+	app := nethttp.New()
+	router := nethttp.NewRouter()
 
-	frameworks.Run(serverPort)
+	app.Router = router
+
+	router.Get("/", func(c *nethttp.Context) error {
+		c.String("Hello, World!")
+		return nil
+	})
+
+	app.Run(":3000" + string(serverPort))
 }
