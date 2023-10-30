@@ -13,7 +13,7 @@ const app_name = "template-api"
 var app_version = os.Getenv("DD_VERSION")
 
 func Run() {
-	serverPort := 8080
+	serverPort := "8099"
 
 	tracer.Start([]tracer.StartOption{
 		tracer.WithLogStartup(false),
@@ -34,5 +34,5 @@ func Run() {
 		return nil
 	})
 
-	app.Run(":3000" + string(serverPort))
+	app.Run(":" + string(serverPort))
 }
