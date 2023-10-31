@@ -5,7 +5,7 @@ import (
 
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 
-	"github.com/fsvxavier/default-hexagonal/pkg/httpserver/nethttp"
+	"github.com/fsvxavier/default-hexagonal/pkg/httpserver/fiber"
 )
 
 const app_name = "template-api"
@@ -13,7 +13,7 @@ const app_name = "template-api"
 var app_version = os.Getenv("DD_VERSION")
 
 func Run() {
-	serverPort := "8099"
+	serverPort := 8099
 
 	tracer.Start([]tracer.StartOption{
 		tracer.WithLogStartup(false),
@@ -24,15 +24,7 @@ func Run() {
 		tracer.WithRuntimeMetrics(),
 	}...)
 
-	app := nethttp.New()
-	router := nethttp.NewRouter()
+	frameworks := fiber.FiberEngine{}
 
-	app.Router = router
-
-	router.Get("/", func(c *nethttp.Context) error {
-		c.String("Hello, World!")
-		return nil
-	})
-
-	app.Run(":" + string(serverPort))
+	frameworks.Run(serverPort)
 }
