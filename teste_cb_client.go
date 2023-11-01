@@ -23,7 +23,7 @@ func DoReq() error {
 	return nil
 }
 
-func main2() {
+func main() {
 	// call with circuit breaker
 	cb := gobreaker.NewCircuitBreaker(
 		gobreaker.Settings{
@@ -39,7 +39,7 @@ func main2() {
 			},
 		},
 	)
-	fmt.Println("Call with circuit breaker")
+	// fmt.Println("Call with circuit breaker")
 	for {
 		_, err := cb.Execute(func() (interface{}, error) {
 			err := DoReq()
@@ -48,6 +48,7 @@ func main2() {
 		if err != nil {
 			fmt.Println(err.Error() + " for client teste")
 		}
-		time.Sleep(100 * time.Millisecond)
+		fmt.Println("Call with circuit breaker")
+		time.Sleep(300 * time.Millisecond)
 	}
 }

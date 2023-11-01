@@ -34,6 +34,7 @@ type Requester struct {
 	gotFirstResponseByte time.Time
 	endTime              time.Time
 	gotConnInfo          httptrace.GotConnInfo
+	request              *http.Request
 }
 
 type Response struct {
@@ -158,31 +159,36 @@ func (r *Requester) Execute(ctx context.Context, method, url string, body io.Rea
 
 	uriREquest := r.BaseURL + url
 
-	reqs, err := http.NewRequestWithContext(httptrace.WithClientTrace(ctx, tracer), method, uriREquest, body)
+	if ok {
+		r.request, err = http.NewRequestWithContext(httptrace.WithClientTrace(ctx, tracer), method, uriREquest, body)
+	} else {
+		r.request, err = http.NewRequest(method, uriREquest, body)
+	}
 	if err != nil {
 		return nil, err
 	}
-
-	reqs.Close = false
 
 	if r.Headers != nil {
 		for k, v := range r.Headers {
-			reqs.Header.Set(k, v)
+			r.request.Header.Set(k, v)
 		}
 	}
 
-	reqs.Header.Set("Content-Type", "application/json")
+	r.request.Header.Set("Content-Type", "application/json")
+
+	var respBody []byte
 
 	isErrors := false
-	resp, err := r.Client.Do(reqs)
-	if err != nil {
-		isErrors = true
-	}
-
-	respBody, err := io.ReadAll(resp.Body)
+	resp, err := r.Client.Do(r.request)
 	if err != nil {
 		return nil, err
+	} else {
+		respBody, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return nil, err
+		}
 	}
+
 	// read response body
 	if resp.StatusCode == http.StatusOK {
 		if r.StructUnmarshal != nil {
@@ -290,7 +296,7 @@ func New() *http.Client {
 	}
 
 	client := &http.Client{
-		Timeout:   idleConnTimeout,
+		Timeout:   time.Duration(time.Second * 3),
 		Transport: transport,
 	}
 
