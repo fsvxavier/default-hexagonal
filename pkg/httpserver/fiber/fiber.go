@@ -22,11 +22,11 @@ type FiberEngine struct{}
 
 var healthcheckPath = func(c *fiber.Ctx) bool { return c.Path() == "/health" }
 
-func (engine FiberEngine) Run(serverPort int) {
+func (engine FiberEngine) Run(serverPort string) {
 	api := fiber.New(fiber.Config{
 		ErrorHandler: middleware.ApplicationErrorHandler,
 		// ReadBufferSize:        40960,
-		DisableStartupMessage: true,
+		DisableStartupMessage: false,
 	})
 
 	if os.Getenv("PPROF_ENABLED") == "true" {
@@ -53,9 +53,9 @@ func (engine FiberEngine) Run(serverPort int) {
 
 	closed := make(chan bool, 1)
 
-	log.Infoln(fmt.Sprintf("Listening on port %d", serverPort))
+	log.Debugln(fmt.Sprintf("Listening on port %s", serverPort))
 
-	api.Listen(fmt.Sprintf(":%v", serverPort))
+	api.Listen(fmt.Sprintf(":%s", serverPort))
 	<-closed
 }
 

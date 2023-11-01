@@ -2,6 +2,8 @@ package config
 
 import (
 	"os"
+
+	cstt "github.com/fsvxavier/default-hexagonal/internal/core/commons/constants"
 )
 
 type Config struct {
@@ -75,7 +77,7 @@ type Redis struct {
 	Addresses        string `env:"RDB_ADDRESSES"        json:"rdb_addresses,omitempty"`
 	MaxActiveConns   string `env:"RDB_MAX_ACTIVE_CONNS" json:"rdb_max_active_conns,omitempty"`
 	PoolSize         string `env:"RDB_POOL_SIZE"        json:"rdb_pool_size,omitempty"`
-	DatabaseNumber   string `env:"RDB_DATABASE"     	json:"rdb_database,omitempty"`
+	DatabaseDefault  string `env:"RDB_DATABASE_DEFAULT" json:"rdb_database_default,omitempty"`
 	TraceServiceName string `env:"RDB_DD_SERVICE_DB"    json:"rdb_dd_service_db,omitempty"`
 	Ping             bool   `env:"RDB_EXECUTE_PING"     json:"rdb_execute_ping,omitempty"`
 	UsageTLS         bool   `env:"RDB_USAGE_TLS"        json:"rdb_usage_tls,omitempty"`
@@ -95,10 +97,6 @@ type Aws struct {
 	Profile string `env:"AWS_PROFILE" json:"aws_profile"`
 	Region  string `env:"AWS_REGION"  json:"aws_region"`
 }
-
-const (
-	TRUE = "true"
-)
 
 func NewConfig() *Config {
 	application := cfgApplication()
@@ -129,14 +127,14 @@ func cfgApplication() *Application {
 		Drivers:        os.Getenv("EVENT_DRIVERS"),
 		Port:           os.Getenv("PORT"),
 		GitCredentials: os.Getenv("GIT_CREDENTIALS"),
-		Pprof:          os.Getenv("PPROF_ENABLED") == TRUE,
+		Pprof:          os.Getenv("PPROF_ENABLED") == cstt.STR_TRUE,
 	}
 }
 
 func cfgLog() *Log {
 	return &Log{
 		Level:   os.Getenv("LOG_LEVEL"),
-		Enabled: os.Getenv("DD_APM_ENABLED") == TRUE,
+		Enabled: os.Getenv("DD_APM_ENABLED") == cstt.STR_TRUE,
 	}
 }
 
@@ -145,9 +143,9 @@ func cfgDatabase() *Database {
 		Driver:      os.Getenv("DB_DIVER"),
 		Type:        os.Getenv("DB_TYPE"),
 		MaxConns:    os.Getenv("DB_MAX_CONNS"),
-		QueryTracer: os.Getenv("DB_QUERY_TRACER") == TRUE,
-		MultiTenant: os.Getenv("DB_MULTI_TENANT_ENABLE") == TRUE,
-		Ping:        os.Getenv("DB_EXECUTE_PING") == TRUE,
+		QueryTracer: os.Getenv("DB_QUERY_TRACER") == cstt.STR_TRUE,
+		MultiTenant: os.Getenv("DB_MULTI_TENANT_ENABLE") == cstt.STR_TRUE,
+		Ping:        os.Getenv("DB_EXECUTE_PING") == cstt.STR_TRUE,
 	}
 
 	// Database config from separate parameters
@@ -175,10 +173,10 @@ func cfgHttp() *Http {
 		Host:            os.Getenv("HTTP_HOST"),
 		Network:         os.Getenv("HTTP_NETWORK"),
 		Concurrency:     os.Getenv("HTTP_CONCURRENCY"),
-		Metrics:         os.Getenv("HTTP_METRICS_ENABLED") == TRUE,
-		Prefork:         os.Getenv("HTTP_PREFORK") == TRUE,
-		Rmu:             os.Getenv("HTTP_RMU") == TRUE,
-		DisableStartMsg: os.Getenv("HTTP_DISABLE_START_MSG") == TRUE,
+		Metrics:         os.Getenv("HTTP_METRICS_ENABLED") == cstt.STR_TRUE,
+		Prefork:         os.Getenv("HTTP_PREFORK") == cstt.STR_TRUE,
+		Rmu:             os.Getenv("HTTP_RMU") == cstt.STR_TRUE,
+		DisableStartMsg: os.Getenv("HTTP_DISABLE_START_MSG") == cstt.STR_TRUE,
 	}
 }
 
@@ -197,11 +195,11 @@ func cfgDatadog() *Datadog {
 		Version:       os.Getenv("DD_VERSION"),
 		AgentHost:     os.Getenv("DD_AGENT_HOST"),
 		AgentPort:     os.Getenv("DD_TRACE_AGENT_PORT"),
-		Enabled:       os.Getenv("DATADOG_ENABLED") == TRUE,
-		Profile:       os.Getenv("DATADOG_PROFILE") == TRUE,
-		ApmEnable:     os.Getenv("DD_APM_ENABLED") == TRUE,
-		LogsInjection: os.Getenv("DD_LOGS_INJECTION") == TRUE,
-		TraceEnable:   os.Getenv("DD_TRACE_ENABLED") == TRUE,
+		Enabled:       os.Getenv("DATADOG_ENABLED") == cstt.STR_TRUE,
+		Profile:       os.Getenv("DATADOG_PROFILE") == cstt.STR_TRUE,
+		ApmEnable:     os.Getenv("DD_APM_ENABLED") == cstt.STR_TRUE,
+		LogsInjection: os.Getenv("DD_LOGS_INJECTION") == cstt.STR_TRUE,
+		TraceEnable:   os.Getenv("DD_TRACE_ENABLED") == cstt.STR_TRUE,
 	}
 }
 
@@ -215,10 +213,10 @@ func cfgRedis() *Redis {
 		MinIdleConns:     os.Getenv("RDB_MIN_IDLE_CONNS"),
 		MaxIdleConns:     os.Getenv("RDB_MAX_IDLE_CONNS"),
 		MaxActiveConns:   os.Getenv("RDB_MAX_ACTIVE_CONNS"),
-		DatabaseNumber:   os.Getenv("RDB_DATABASE"),
+		DatabaseDefault:  os.Getenv("RDB_DATABASE_DEFAULT"),
 		PoolSize:         os.Getenv("RDB_POOL_SIZE"),
-		Ping:             os.Getenv("RDB_EXECUTE_PING") == TRUE,
-		UsageTLS:         os.Getenv("RDB_USAGE_TLS") == TRUE,
+		Ping:             os.Getenv("RDB_EXECUTE_PING") == cstt.STR_TRUE,
+		UsageTLS:         os.Getenv("RDB_USAGE_TLS") == cstt.STR_TRUE,
 		TraceServiceName: os.Getenv("RDB_DD_SERVICE_DB"),
 	}
 }
