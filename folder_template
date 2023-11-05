@@ -6,36 +6,41 @@
    │   └── webserver
    │	   └── main.go
    │
-   ├── config
+   ├── config - Arquivo de configuração
    │   └── config.go
    │
    ├── internal
    │    ├── adapters
-   │    │   ├── controllers (handlers)
+   │    │   ├── controllers (handlers) - São Adapter primários
    │    │   │   ├── grpc.go
    │    │   │   └── http.go
    │    │   │
-   │    │   └── repositories
+   │    │   └── repositories - São adapters secundários
    │    │       ├── table1.go
    │    │       └── table2.go
    │    │
    │    └── core
    │        ├── domain (models)
-   │        │   └── model.go
-   │   	    │
+   │        │   ├── inputs - Models de entrada
+   │        │   │   └── model.go
+   │        │   ├── process - Models de processamento em geral
+   │        │   │   └── model.go
+   │        │   └── output - Models de saida
+   │        │       └── model.go
+   │   	   │
    │        ├── ports (interfaces)
-   │        │   ├── repositories
-   │        │   └── services
-   │	    │
-   │	    ├── mocks
-   │	    │
+   │        │   ├── repositories - Portas dos adapters sercundários
+   │        │   └── services - Portas dos adapters primários
+   │	      │
+   │	      ├── mocks
+   │	      │
    │        └── services (usecases)
    │            └── services.go
    │
-   ├── lint
+   ├── lint - Pasta com o report dos lints
    │   └── lint.html
    │
-   ├── pkg
+   ├── pkg - Pacotes de libs que serão utilizadas no projeto
    │   ├── database
    │   │   ├── redis.go
    │   │   └── postgresql.go
