@@ -1,0 +1,66 @@
+└── PROJECT
+   ├── cmd
+   │   ├── worker
+   │   │   └── main.go
+   │   │
+   │   └── webserver
+   │	   └── main.go
+   │
+   ├── config
+   │   └── config.go
+   │
+   ├── internal
+   │    ├── adapters
+   │    │   ├── controllers (handlers)
+   │    │   │   ├── grpc.go
+   │    │   │   └── http.go
+   │    │   │
+   │    │   └── repositories
+   │    │       ├── table1.go
+   │    │       └── table2.go
+   │    │
+   │    └── core
+   │        ├── domain (models)
+   │        │   └── model.go
+   │   	    │
+   │        ├── ports (interfaces)
+   │        │   ├── repositories
+   │        │   └── services
+   │	    │
+   │	    ├── mocks
+   │	    │
+   │        └── services (usecases)
+   │            └── services.go
+   │
+   ├── lint
+   │   └── lint.html
+   │
+   ├── pkg
+   │   ├── database
+   │   │   ├── redis.go
+   │   │   └── postgresql.go
+   │   │
+   │   ├── decimal
+   │   │   └── decimal.go
+   │   │
+   │   ├── httpclient
+   │   │   └── httpclient.go
+   │   │
+   │   ├── httpserver
+   │   │   └── httpserver.go
+   │   │
+   │   ├── logger
+   │   │   └── logger.go
+   │   │
+   │   ├── tracing
+   │   │   └── tracing.go
+   │   │
+   │   └── ulid
+   │       └── ulid.go
+   │
+   ├── go.mod
+   ├── go.sum
+   ├── .gitignore
+   ├── .golangci.yml
+   ├── README.md
+   └── main.go
