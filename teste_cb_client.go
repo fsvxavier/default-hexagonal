@@ -23,7 +23,7 @@ func DoReq() error {
 	return nil
 }
 
-func main() {
+func main2() {
 	// call with circuit breaker
 	cb := gobreaker.NewCircuitBreaker(
 		gobreaker.Settings{

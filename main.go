@@ -11,7 +11,7 @@ import (
 // @version	1.0
 // @host		localhost:8086
 // @schemes	http.
-func main2() {
+func main() {
 	// To load our environmental variables.
 	err := godotenv.Load(".env")
 	if err != nil {

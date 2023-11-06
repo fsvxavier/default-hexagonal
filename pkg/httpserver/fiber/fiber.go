@@ -18,11 +18,14 @@ import (
 	log "github.com/fsvxavier/default-hexagonal/pkg/logger/zap"
 )
 
-type FiberEngine struct{}
+type FiberEngine struct {
+	app  *fiber.App
+	port string
+}
 
 var healthcheckPath = func(c *fiber.Ctx) bool { return c.Path() == "/health" }
 
-func (engine FiberEngine) Run(serverPort string) {
+func (engine FiberEngine) NewWebserver(serverPort string) {
 	api := fiber.New(fiber.Config{
 		ErrorHandler: middleware.ApplicationErrorHandler,
 		// ReadBufferSize:        40960,
@@ -49,13 +52,16 @@ func (engine FiberEngine) Run(serverPort string) {
 		api.Use(limiter.New(middleware.DefaultRateLimiterConfig))
 	}
 
-	engine.Router(api)
+	engine.app = api
+	engine.port = serverPort
+}
 
+func (engine FiberEngine) Run() {
 	closed := make(chan bool, 1)
 
-	log.Debugln(fmt.Sprintf("Listening on port %s", serverPort))
+	log.Debugln(fmt.Sprintf("Listening on port %s", engine.port))
 
-	api.Listen(fmt.Sprintf(":%s", serverPort))
+	engine.app.Listen(("0.0.0.0:" + engine.port))
 	<-closed
 }
 
@@ -64,8 +70,8 @@ func liveCheck(ctx *fiber.Ctx) error {
 	return ctx.JSON(message)
 }
 
-func (FiberEngine) Router(api *fiber.App) {
-	api.Get("/health", func(ctx *fiber.Ctx) error {
+func (engine FiberEngine) Router() {
+	engine.app.Get("/health", func(ctx *fiber.Ctx) error {
 		log.Debugln(ctx.Path(), ctx.Get("X-Kubernetes-Probe"))
 
 		switch ctx.Get("X-Kubernetes-Probe") {
@@ -76,13 +82,13 @@ func (FiberEngine) Router(api *fiber.App) {
 		}
 	})
 
-	api.Route("/docs/*", func(r fiber.Router) {
+	engine.app.Route("/docs/*", func(r fiber.Router) {
 		r.Get("", swagger.New(swagger.Config{
 			DocExpansion: "none",
 		}))
 	})
 
-	api.All("/*", func(ctx *fiber.Ctx) error {
+	engine.app.All("/*", func(ctx *fiber.Ctx) error {
 		ctx.Status(http.StatusForbidden)
 		return ctx.JSON(fiber.Map{"message": "Forbidden"})
 	})

@@ -207,5 +207,7 @@ func Run() {
 
 	httpServer := fiber.FiberEngine{}
 
-	httpServer.Run(cfg.Http.Port)
+	httpServer.NewWebserver(cfg.Http.Port)
+	httpServer.Router()
+	httpServer.Run()
 }
