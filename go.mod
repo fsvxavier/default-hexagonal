@@ -11,7 +11,6 @@ require (
 	github.com/gofiber/swagger v0.1.14
 	github.com/gomodule/redigo v1.8.9
 	github.com/google/uuid v1.4.0
-	github.com/jackc/pgx-shopspring-decimal v0.0.0-20220624020537-1d36b5a1853e
 	github.com/jackc/pgx/v5 v5.5.0
 	github.com/joho/godotenv v1.5.1
 	github.com/json-iterator/go v1.1.12
@@ -23,7 +22,7 @@ require (
 	github.com/stretchr/testify v1.8.4
 	github.com/valyala/fasthttp v1.50.0
 	go.uber.org/zap v1.26.0
-	gopkg.in/DataDog/dd-trace-go.v1 v1.56.1
+	gopkg.in/DataDog/dd-trace-go.v1 v1.57.0
 )
 
 require (
@@ -42,7 +41,6 @@ require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20230717121745-296ad89f973d // indirect
 	github.com/chenzhuoyu/iasm v0.9.1 // indirect
-	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/ebitengine/purego v0.5.0 // indirect
@@ -63,7 +61,7 @@ require (
 	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/klauspost/compress v1.17.2 // indirect
-	github.com/klauspost/cpuid/v2 v2.2.5 // indirect
+	github.com/klauspost/cpuid/v2 v2.2.6 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
