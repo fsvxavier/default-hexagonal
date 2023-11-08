@@ -25,7 +25,7 @@ type FiberEngine struct {
 
 var healthcheckPath = func(c *fiber.Ctx) bool { return c.Path() == "/health" }
 
-func (engine FiberEngine) NewWebserver(serverPort string) {
+func (engine *FiberEngine) NewWebserver(serverPort string) {
 	api := fiber.New(fiber.Config{
 		ErrorHandler: middleware.ApplicationErrorHandler,
 		// ReadBufferSize:        40960,
@@ -56,7 +56,15 @@ func (engine FiberEngine) NewWebserver(serverPort string) {
 	engine.port = serverPort
 }
 
-func (engine FiberEngine) Run() {
+func (engine *FiberEngine) GetApp() *fiber.App {
+	return engine.app
+}
+
+func (engine *FiberEngine) GetPort() string {
+	return engine.port
+}
+
+func (engine *FiberEngine) Run() {
 	closed := make(chan bool, 1)
 
 	log.Debugln(fmt.Sprintf("Listening on port %s", engine.port))
@@ -65,31 +73,17 @@ func (engine FiberEngine) Run() {
 	<-closed
 }
 
-func liveCheck(ctx *fiber.Ctx) error {
-	message := map[string]string{"status": "ok"}
-	return ctx.JSON(message)
-}
-
-func (engine FiberEngine) Router() {
-	engine.app.Get("/health", func(ctx *fiber.Ctx) error {
-		log.Debugln(ctx.Path(), ctx.Get("X-Kubernetes-Probe"))
-
-		switch ctx.Get("X-Kubernetes-Probe") {
-		case "live":
-			return liveCheck(ctx)
-		default:
-			return liveCheck(ctx)
-		}
-	})
-
-	engine.app.Route("/docs/*", func(r fiber.Router) {
+func (engine *FiberEngine) Router(app *fiber.App) {
+	app.Route("/docs/*", func(r fiber.Router) {
 		r.Get("", swagger.New(swagger.Config{
 			DocExpansion: "none",
 		}))
 	})
 
-	engine.app.All("/*", func(ctx *fiber.Ctx) error {
+	app.All("/*", func(ctx *fiber.Ctx) error {
 		ctx.Status(http.StatusForbidden)
 		return ctx.JSON(fiber.Map{"message": "Forbidden"})
 	})
+
+	engine.app = app
 }

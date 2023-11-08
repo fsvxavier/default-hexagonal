@@ -12,6 +12,7 @@ import (
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace"
 	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
 
+	"github.com/fsvxavier/default-hexagonal/cmd/webserver/routering"
 	. "github.com/fsvxavier/default-hexagonal/config"
 	"github.com/fsvxavier/default-hexagonal/pkg/database/gpgx"
 	"github.com/fsvxavier/default-hexagonal/pkg/database/redis"
@@ -93,13 +94,13 @@ func initDatabase(ctx context.Context, cfg *Config) (*pgxpool.Pool, error) {
 
 	err = pool.NewPool(ctxs, cfg.Database.Connection.Url)
 	if err != nil {
-		logger.Error(ctxs, "Error to create a new pool database - "+err.Error())
+		logger.Fatal(ctxs, "Error to create a new pool database - "+err.Error())
 	}
 
 	if cfg.Database.Ping {
 		err = pool.Pool().Ping(ctxs)
 		if err != nil {
-			logger.Error(ctxs, "Error to ping database - "+err.Error())
+			logger.Fatal(ctxs, "Error to ping database - "+err.Error())
 		}
 	}
 
@@ -124,7 +125,7 @@ func initRedis(ctx context.Context, cfg *Config) (rdb redis.Redigo, err error) {
 	}
 	maxActive, err := strconv.ParseInt(defaultMaxActiveConns, 10, 64)
 	if err != nil {
-		logger.Error(ctxs, "Error to ParseInt maxActive - "+err.Error())
+		logger.Fatal(ctxs, "Error to ParseInt maxActive - "+err.Error())
 		return redis.Redigo{}, err
 	}
 
@@ -135,7 +136,7 @@ func initRedis(ctx context.Context, cfg *Config) (rdb redis.Redigo, err error) {
 	}
 	rdbDatabase, err := strconv.ParseInt(defaultDatabase, 10, 64)
 	if err != nil {
-		logger.Error(ctxs, "Error to ParseInt rdbDatabase - "+err.Error())
+		logger.Fatal(ctxs, "Error to ParseInt rdbDatabase - "+err.Error())
 		return redis.Redigo{}, err
 	}
 
@@ -146,7 +147,7 @@ func initRedis(ctx context.Context, cfg *Config) (rdb redis.Redigo, err error) {
 	}
 	maxIdleConns, err := strconv.ParseInt(defaultMaxIdleConns, 10, 64)
 	if err != nil {
-		logger.Error(ctxs, "Error to ParseInt maxIdleConns - "+err.Error())
+		logger.Fatal(ctxs, "Error to ParseInt maxIdleConns - "+err.Error())
 		return redis.Redigo{}, err
 	}
 
@@ -193,11 +194,11 @@ func Run() {
 		}
 	}
 
-	pool, err := initDatabase(ctxs, cfg)
+	dbPool, err := initDatabase(ctxs, cfg)
 	if err != nil {
 		logger.Panic(ctxs, "Error to connect Database - "+err.Error())
 	}
-	defer pool.Close()
+	defer dbPool.Close()
 
 	rdb, err := initRedis(ctxs, cfg)
 	if err != nil {
@@ -208,6 +209,8 @@ func Run() {
 	httpServer := fiber.FiberEngine{}
 
 	httpServer.NewWebserver(cfg.Http.Port)
-	httpServer.Router()
+	router := routering.NewRoutes(httpServer.GetApp(), dbPool, &rdb)
+	router.SetupRoutes()
+	httpServer.Router(router.App)
 	httpServer.Run()
 }

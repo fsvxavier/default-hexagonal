@@ -5,6 +5,8 @@ const (
 	FALSE                        = false
 	STR_TRUE                     = "true"
 	STR_FALSE                    = "false"
+	OK                           = "OK"
+	ERROR                        = "ERROR"
 	DEFAULT_MAX_CONS             = "20"
 	DEFAULT_MIN_CONS             = "1"
 	DEFAULT_CONN_LIFE_TIME       = "3600"
