@@ -42,9 +42,11 @@ func (hcc *healthcheckController) GetHealthcheck(ctx *fiber.Ctx) (err error) {
 	hcService := services.NewHealthCheckService(dbConn, rdbConn)
 	hcReturn, err := hcService.GetHealthcheck()
 	if err != nil {
-		return err
+		ctx.SendStatus(500)
+		return ctx.JSON(hcReturn)
 	}
 
+	ctx.SendStatus(200)
 	return ctx.JSON(hcReturn)
 }
 

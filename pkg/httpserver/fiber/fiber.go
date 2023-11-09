@@ -29,7 +29,8 @@ func (engine *FiberEngine) NewWebserver(serverPort string) {
 	api := fiber.New(fiber.Config{
 		ErrorHandler: middleware.ApplicationErrorHandler,
 		// ReadBufferSize:        40960,
-		DisableStartupMessage: false,
+		DisableStartupMessage: os.Getenv("HTTP_DISABLE_START_MSG") == "true",
+		Prefork:               os.Getenv("HTTP_PREFORK") == "true",
 	})
 
 	if os.Getenv("PPROF_ENABLED") == "true" {
