@@ -67,6 +67,7 @@ func (hlc *healthcheckService) checkExternalApps(actualHealthStatus *domains.Hea
 
 	for i := range actualStatus {
 		client := nethttp.NewRequester(nethttp.New())
+		client.SetTimeOutRequest(30)
 		client.SetBaseURL("https://vpce-078c9ba44be2cbce6-e7abdu82.execute-api.us-east-2.vpce.amazonaws.com/Live")
 		client.Headers = map[string]string{
 			"Content-Type": "application/json",

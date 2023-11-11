@@ -35,6 +35,7 @@ type Requester struct {
 	endTime              time.Time
 	gotConnInfo          httptrace.GotConnInfo
 	request              *http.Request
+	timeoutMilliseconds  int
 }
 
 type Response struct {
@@ -110,6 +111,11 @@ func (r *Requester) Unmarshal(v any) *Requester {
 	return r
 }
 
+func (r *Requester) SetTimeOutRequest(timeoutMilliseconds int) *Requester {
+	r.timeoutMilliseconds = timeoutMilliseconds
+	return r
+}
+
 func (r *Requester) Execute(ctx context.Context, method, url string, body io.Reader) (response *Response, err error) {
 	ddSpan, ok := tracer.SpanFromContext(ctx)
 	defer ddSpan.Finish()
@@ -175,6 +181,10 @@ func (r *Requester) Execute(ctx context.Context, method, url string, body io.Rea
 	}
 
 	r.request.Header.Set("Content-Type", "application/json")
+
+	if r.timeoutMilliseconds > 0 {
+		r.Client.Timeout = time.Duration(time.Duration(r.timeoutMilliseconds).Milliseconds())
+	}
 
 	var respBody []byte
 

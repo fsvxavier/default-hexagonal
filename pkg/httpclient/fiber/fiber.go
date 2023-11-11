@@ -124,11 +124,11 @@ func (req *Request) Execute(ctx context.Context, method, endpoint string, body [
 	}
 
 	// You may read the timeouts from some config
-	readTimeout, err := time.ParseDuration("500ms")
+	readTimeout, err := time.ParseDuration("50ms")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	writeTimeout, err := time.ParseDuration("500ms")
+	writeTimeout, err := time.ParseDuration("50ms")
 	if err != nil {
 		fmt.Println(err.Error())
 	}
