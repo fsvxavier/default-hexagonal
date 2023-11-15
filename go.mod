@@ -7,7 +7,7 @@ require (
 	github.com/georgysavva/scany/v2 v2.0.0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/go-resty/resty/v2 v2.10.0
-	github.com/gofiber/fiber/v2 v2.50.0
+	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/gofiber/swagger v0.1.14
 	github.com/gomodule/redigo v1.8.9
 	github.com/google/uuid v1.4.0
@@ -20,13 +20,13 @@ require (
 	github.com/shopspring/decimal v1.3.1
 	github.com/sony/gobreaker v0.5.0
 	github.com/stretchr/testify v1.8.4
-	github.com/valyala/fasthttp v1.50.0
+	github.com/valyala/fasthttp v1.51.0
 	go.uber.org/zap v1.26.0
 	gopkg.in/DataDog/dd-trace-go.v1 v1.57.0
 )
 
 require (
-	github.com/DataDog/appsec-internal-go v1.0.1 // indirect
+	github.com/DataDog/appsec-internal-go v1.0.2 // indirect
 	github.com/DataDog/datadog-agent/pkg/obfuscate v0.49.0 // indirect
 	github.com/DataDog/datadog-agent/pkg/remoteconfig/state v0.49.0 // indirect
 	github.com/DataDog/datadog-go/v5 v5.3.0 // indirect
@@ -90,15 +90,15 @@ require (
 	go4.org/intern v0.0.0-20230525184215-6c62f75575cb // indirect
 	go4.org/unsafe/assume-no-moving-gc v0.0.0-20230525183740-e7c30c78aeb2 // indirect
 	golang.org/x/arch v0.6.0 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
-	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
+	golang.org/x/crypto v0.15.0 // indirect
+	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
 	golang.org/x/mod v0.14.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/net v0.18.0 // indirect
 	golang.org/x/sync v0.5.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
 	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.4.0 // indirect
-	golang.org/x/tools v0.14.0 // indirect
+	golang.org/x/tools v0.15.0 // indirect
 	golang.org/x/xerrors v0.0.0-20231012003039-104605ab7028 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
