@@ -127,7 +127,7 @@ func (r *Requester) Execute(ctx context.Context, method, url string, body io.Rea
 		}
 	}
 
-	tracer := &httptrace.ClientTrace{
+	tracerExec := &httptrace.ClientTrace{
 		DNSStart: func(dnsstartInfo httptrace.DNSStartInfo) {
 			r.dnsStart = time.Now()
 		},
@@ -166,7 +166,7 @@ func (r *Requester) Execute(ctx context.Context, method, url string, body io.Rea
 	uriREquest := r.BaseURL + url
 
 	if ok {
-		r.request, err = http.NewRequestWithContext(httptrace.WithClientTrace(ctx, tracer), method, uriREquest, body)
+		r.request, err = http.NewRequestWithContext(httptrace.WithClientTrace(ctx, tracerExec), method, uriREquest, body)
 	} else {
 		r.request, err = http.NewRequest(method, uriREquest, body)
 	}

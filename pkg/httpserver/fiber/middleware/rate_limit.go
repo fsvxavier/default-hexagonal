@@ -25,7 +25,7 @@ func rateLimiterStorage(ctx context.Context) fiber.Storage {
 
 	if redisHost != "" && redisUsername != "" && redisPassword != "" {
 		addrs := strings.Split(redisHost, ",")
-		return redis.NewCache(redis.RedigoPoolOptions{
+		return redis.NewCache(&redis.RedigoPoolOptions{
 			Context:   ctx,
 			Database:  1,
 			Addresses: addrs,

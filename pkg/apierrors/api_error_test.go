@@ -63,7 +63,7 @@ func TestMakeDockApiErrorCode(t *testing.T) {
 	matchRegex := "^[A-Z]{3,5}-[A-Z0-9-_]{3,10}$"
 	c := MakeDockApiErrorCode("TEST", "TEST")
 	r, _ := regexp.Compile(matchRegex)
-	if !r.Match([]byte(c)) {
+	if !r.MatchString(c) {
 		t.Errorf("Expected MakeDockApiErrorCode to return a code matching regex %s Got %s", matchRegex, c)
 	}
 }

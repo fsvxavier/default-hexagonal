@@ -13,7 +13,7 @@ type RedigoCache struct {
 	conn rgo.Conn
 }
 
-func NewCache(options RedigoPoolOptions) *RedigoCache {
+func NewCache(options *RedigoPoolOptions) *RedigoCache {
 	rgoInstance, _ := NewRedigo(options.Context, &RedigoPoolOptions{
 		Addresses: options.Addresses,
 		Password:  options.Password,
