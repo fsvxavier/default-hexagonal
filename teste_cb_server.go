@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func main3() {
+func main() {
 	gin.SetMode(gin.ReleaseMode)
 	e := gin.Default()
 	e.GET("/ping", func(ctx *gin.Context) {

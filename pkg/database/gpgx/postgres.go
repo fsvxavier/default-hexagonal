@@ -164,6 +164,13 @@ func (pgc *PgConnection) Close() {
 	}
 }
 
+func (pgc *PgConnection) Stat() *pgxpool.Stat {
+	if pgc.Pool() != nil {
+		return pgc.Pool().Stat()
+	}
+	return nil
+}
+
 func (pgc *PgConnection) queryFor(ctx context.Context, tx *pgx.Tx, dst any, many bool, sql string, arguments ...any) error {
 	qr, err := pgc.query(ctx, tx, sql, arguments...)
 	if err != nil {

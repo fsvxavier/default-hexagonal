@@ -306,7 +306,7 @@ func New() *http.Client {
 	}
 
 	client := &http.Client{
-		Timeout:   time.Duration(time.Second * 3),
+		Timeout:   time.Duration(time.Millisecond * 300),
 		Transport: transport,
 	}
 
